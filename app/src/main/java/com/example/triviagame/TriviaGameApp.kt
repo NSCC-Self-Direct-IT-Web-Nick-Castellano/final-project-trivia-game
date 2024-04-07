@@ -43,7 +43,7 @@ fun TriviaGameTopAppBar(
                     Icon(
                         imageVector = Icons.Filled.ArrowBack,
                         tint = MaterialTheme.colorScheme.primary,
-                        contentDescription = "back_button"
+                        contentDescription = stringResource(id = R.string.btn_back)
                     )
                 }
             }
