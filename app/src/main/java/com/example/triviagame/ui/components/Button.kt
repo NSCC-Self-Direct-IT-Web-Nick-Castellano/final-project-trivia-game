@@ -1,5 +1,6 @@
 package com.example.triviagame.ui.components
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -13,11 +14,13 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun AppDefaultButton(
     onButtonClicked: () -> Unit,
-    buttonText: String
+    buttonText: String,
+    modifier: Modifier = Modifier,
+    maxWidth: Float = 1f
 ) {
     Button(
         onClick = onButtonClicked,
-        modifier = Modifier.padding(16.dp)
+        modifier = modifier.padding(16.dp).fillMaxWidth(maxWidth)
     ) {
         Text(buttonText)
     }
