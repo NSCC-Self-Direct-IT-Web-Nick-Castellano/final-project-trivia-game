@@ -32,15 +32,19 @@ fun TriviaGameNavHost(
     ) {
         composable(route = HomeDestination.route) {
             HomeScreen(
-                navigateToChooseTopic = { },
-                navigateToScoreResults = { }
+                navigateToChooseTopic = { navController.navigate(ChooseTopicDestination.route) },
+                navigateToScoreResults = { navController.navigate(ScoreboardDestination.route) }
             )
         }
         composable(route = ChooseTopicDestination.route) {
-             ChooseTopicScreen()
+             ChooseTopicScreen(
+                 onNavigateBack = { navController.navigateUp() }
+             )
         }
         composable(route = ScoreboardDestination.route) {
-            ScoreboardScreen()
+            ScoreboardScreen(
+                onNavigateBack = { navController.navigateUp() }
+            )
         }
         composable(route = GameTurnDestination.route) {
             GameTurnScreen()

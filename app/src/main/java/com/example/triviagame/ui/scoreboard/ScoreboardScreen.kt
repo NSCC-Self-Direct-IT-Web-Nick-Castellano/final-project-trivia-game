@@ -31,6 +31,7 @@ object ScoreboardDestination : NavigationDestination {
 @ExperimentalMaterial3Api
 @Composable
 fun ScoreboardScreen(
+    onNavigateBack: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
@@ -43,6 +44,7 @@ fun ScoreboardScreen(
                 ),
                 canNavigateBack = true,
                 scrollBehavior = scrollBehavior,
+                navigateUp = onNavigateBack
             )
         },
     ) { innerPadding ->

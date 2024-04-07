@@ -33,6 +33,7 @@ object ChooseTopicDestination : NavigationDestination {
 fun ChooseTopicScreen(
 //    navigateToChooseTopic: () -> Unit,
 //    navigateToScoreResults: () -> Unit,
+    onNavigateBack: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
@@ -45,6 +46,7 @@ fun ChooseTopicScreen(
                 ),
                 canNavigateBack = true,
                 scrollBehavior = scrollBehavior,
+                navigateUp = onNavigateBack
             )
         },
     ) { innerPadding ->
