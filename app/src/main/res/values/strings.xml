@@ -8,6 +8,8 @@
 
     <!-- texts -->
     <string name="txt_welcome_screen">Welcome to the Trivia Game!</string>
+    <string name="txt_scoreboard_results">Your score history:</string>
+
     <!--navigation destinations-->
     <string name="home_destination">Home</string>
     <string name="choose_topic_destination">Choose Trivia Topic</string>

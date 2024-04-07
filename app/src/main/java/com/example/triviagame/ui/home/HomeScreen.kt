@@ -19,6 +19,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.triviagame.R
 import com.example.triviagame.TriviaGameTopAppBar
+import com.example.triviagame.ui.components.AppDefaultButton
+import com.example.triviagame.ui.components.AppDefaultTextLabel
 import com.example.triviagame.ui.navigation.NavigationDestination
 
 /**
@@ -76,26 +78,21 @@ fun HomeBody(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier,
     ) {
-        /**
-         * Add 2 buttons, one to navigate to ChooseTopic screen
-         * and the other to navigate to ScoreResults screen
-         */
-        Text(
-            text = stringResource(id = R.string.txt_welcome_screen),
-            modifier = Modifier.padding(16.dp)
+
+        // a welcome message
+        AppDefaultTextLabel(text = stringResource(id = R.string.txt_welcome_screen))
+
+        // a button to navigate to the Choose Topic screen
+        AppDefaultButton(
+            onButtonClicked = navigateToChooseTopic,
+            buttonText = stringResource(id = R.string.btn_choose_topic)
         )
-        Button(
-            onClick = navigateToChooseTopic,
-            modifier = Modifier.padding(16.dp)
-        ) {
-            Text(stringResource(id = R.string.btn_choose_topic))
-        }
-        Button(
-            onClick = navigateToScoreResults,
-            modifier = Modifier.padding(16.dp)
-        ) {
-            Text(stringResource(id = R.string.btn_scoreboard))
-        }
+
+        // a button to navigate to the Scoreboard screen
+        AppDefaultButton(
+            onButtonClicked = navigateToScoreResults,
+            buttonText = stringResource(id = R.string.btn_scoreboard)
+        )
     }
 }
 
