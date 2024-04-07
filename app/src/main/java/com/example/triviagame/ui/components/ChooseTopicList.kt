@@ -14,22 +14,32 @@ import com.example.triviagame.data.model.TriviaTopic
 @Composable
 fun ChooseTopicButtonList(
     navigateToChooseTopic: () -> Unit,
+    topics: List<TriviaTopic>,
     modifier: Modifier = Modifier
 ) {
-    // make a list of TriviaTopic
-    val triviaTopicList = listOf<TriviaTopic>(
-        TriviaTopic(id = 1, typeName = "Movies"),
-        TriviaTopic(id = 2, typeName = "Music"),
-        TriviaTopic(id = 3, typeName = "Videogane"),
-        TriviaTopic(id = 4, typeName = "Sports"),
-    )
-    LazyColumn {
-        items(items = triviaTopicList) { item ->
-            AppDefaultButton(
-                onButtonClicked = navigateToChooseTopic,
-                buttonText = item.typeName,
-                maxWidth = 0.7f
-            )
+//    // make a list of TriviaTopic
+//    val triviaTopicList = listOf<TriviaTopic>(
+//        TriviaTopic(id = 1, typeName = "Movies"),
+//        TriviaTopic(id = 2, typeName = "Music"),
+//        TriviaTopic(id = 3, typeName = "Videogane"),
+//        TriviaTopic(id = 4, typeName = "Sports"),
+//    )
+
+    if (topics.isEmpty()) {
+        // if the list is empty, show a message
+        AppDefaultTextLabel(
+            text = "No topics available",
+            modifier = modifier
+        )
+    } else {
+        LazyColumn {
+            items(items = topics) { item ->
+                AppDefaultButton(
+                    onButtonClicked = navigateToChooseTopic,
+                    buttonText = item.typeName,
+                    maxWidth = 0.7f
+                )
+            }
         }
     }
 }
@@ -41,6 +51,12 @@ fun ChooseTopicButtonList(
 @Composable
 fun ChooseTopicButtonListPreview() {
     ChooseTopicButtonList(
-        navigateToChooseTopic = {}
+        navigateToChooseTopic = {},
+        topics = listOf(
+            TriviaTopic(id = 1, typeName = "Movies"),
+            TriviaTopic(id = 2, typeName = "Music"),
+            TriviaTopic(id = 3, typeName = "Videogane"),
+            TriviaTopic(id = 4, typeName = "Sports"),
+        )
     )
 }

@@ -90,7 +90,10 @@ fun ChooseTopicBody(
         AppDefaultTextLabel(text = stringResource(id = R.string.txt_choose_topic))
 
         // choose topic button list
-        ChooseTopicButtonList(navigateToChooseTopic = { /*TODO*/ })
+        ChooseTopicButtonList(
+            navigateToChooseTopic = { /*TODO*/ },
+            topics = topics
+        )
 
     }
 }
@@ -104,6 +107,7 @@ fun ChooseTopicBody(
 @Composable
 fun ChooseTopicScreenPreview() {
     ChooseTopicScreen(
+        onNavigateBack = {},
 //        navigateToChooseTopic = {},
 //        navigateToScoreResults = {},
     )
