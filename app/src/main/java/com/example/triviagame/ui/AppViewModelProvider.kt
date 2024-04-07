@@ -2,15 +2,22 @@ package com.example.triviagame.ui
 
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.CreationExtras
+import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.triviagame.TriviaGameApplication
+import com.example.triviagame.ui.choosetopic.ChooseTopicViewModel
 
 /**
  * Provides Factory to create instance of ViewModel for the entire Trivia Game app
  */
 object AppViewModelProvider {
     val Factory = viewModelFactory {
+    initializer {
+        ChooseTopicViewModel(
+            triviaTopicsRepository = triviaGameApplication().container.triviaTopicRepository
+        )
 
+    }
     }
 }
 

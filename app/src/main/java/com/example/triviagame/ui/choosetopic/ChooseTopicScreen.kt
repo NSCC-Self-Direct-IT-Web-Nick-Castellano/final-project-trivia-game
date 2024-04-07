@@ -8,13 +8,17 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.triviagame.R
 import com.example.triviagame.TriviaGameTopAppBar
+import com.example.triviagame.data.model.TriviaTopic
+import com.example.triviagame.ui.AppViewModelProvider
 import com.example.triviagame.ui.components.AppDefaultTextLabel
 import com.example.triviagame.ui.components.ChooseTopicButtonList
 import com.example.triviagame.ui.navigation.NavigationDestination
@@ -34,9 +38,12 @@ fun ChooseTopicScreen(
 //    navigateToChooseTopic: () -> Unit,
 //    navigateToScoreResults: () -> Unit,
     onNavigateBack: () -> Unit = {},
+    viewModel: ChooseTopicViewModel = viewModel(factory= AppViewModelProvider.Factory),
     modifier: Modifier = Modifier
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    val triviaTopicsUiState = viewModel.triviaTopicsUiState.collectAsState()
+
     Scaffold (
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
@@ -53,6 +60,7 @@ fun ChooseTopicScreen(
         ChooseTopicBody(
 //            navigateToChooseTopic = navigateToChooseTopic,
 //            navigateToScoreResults = navigateToScoreResults,
+            topics = triviaTopicsUiState.value.triviaTopicsList,
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
@@ -69,6 +77,7 @@ fun ChooseTopicScreen(
 fun ChooseTopicBody(
 //    navigateToChooseTopic: () -> Unit,
 //    navigateToScoreResults: () -> Unit,
+    topics: List<TriviaTopic>,
     modifier: Modifier = Modifier
 ) {
     Column(
