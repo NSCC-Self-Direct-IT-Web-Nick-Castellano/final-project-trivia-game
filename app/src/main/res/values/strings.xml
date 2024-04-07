@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">Trivia Game</string>
+
+    <!-- butons-->
+    <string name="btn_back">Back</string>
+    <string name="btn_scoreboard">Scoreboard</string>
+    <string name="btn_choose_topic">Choose Game Topic</string>
+
+    <!-- texts -->
+    <string name="txt_welcome_screen">Welcome to the Trivia Game!</string>
+    <!--navigation destinations-->
+    <string name="home_destination">Home</string>
+    <string name="choose_topic_destination">Choose Trivia Topic</string>
+    <string name="game_turn_destination">Game Question</string>
+    <string name="game_result_destination">Game Result</string>
+    <string name="scoreboard_destination">Scoreboard</string>
+
 </resources>

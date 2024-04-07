@@ -14,9 +14,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.triviagame.R
 import com.example.triviagame.TriviaGameTopAppBar
+import com.example.triviagame.ui.navigation.NavigationDestination
+
+/**
+ * Home Screen Navigate Destination
+ */
+object HomeDestination : NavigationDestination {
+    override val route = "home"
+    override val titleRes = R.string.home_destination
+}
+
 
 @ExperimentalMaterial3Api
 @Composable
@@ -30,7 +42,11 @@ fun HomeScreen(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             TriviaGameTopAppBar(
-                title = "Trivia Game",
+                title = stringResource(
+                    id = R.string.app_name
+                ) + " - " + stringResource(
+                    id = R.string.home_destination
+                ),
                 canNavigateBack = false,
                 scrollBehavior = scrollBehavior,
             )
@@ -65,20 +81,20 @@ fun HomeBody(
          * and the other to navigate to ScoreResults screen
          */
         Text(
-            text = "Welcome to the Trivia Game!",
+            text = stringResource(id = R.string.txt_welcome_screen),
             modifier = Modifier.padding(16.dp)
         )
         Button(
             onClick = navigateToChooseTopic,
             modifier = Modifier.padding(16.dp)
         ) {
-            Text("Start Game")
+            Text(stringResource(id = R.string.btn_choose_topic))
         }
         Button(
             onClick = navigateToScoreResults,
             modifier = Modifier.padding(16.dp)
         ) {
-            Text("View Scores")
+            Text(stringResource(id = R.string.btn_scoreboard))
         }
     }
 }
