@@ -1,6 +1,7 @@
 package com.example.triviagame.ui.scoreboard
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -123,6 +124,12 @@ fun ScoreListHeader(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = modifier
             .fillMaxWidth()
+            .border(
+                width = 1.dp,
+                color = MaterialTheme.colorScheme.primary.copy(alpha = 0.75f)
+            )
+            .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.25f)
+            )
 
     ) {
         Text(
@@ -155,6 +162,14 @@ fun ScoreListItem(
 ) {
     Row(
         modifier = modifier
+            .fillMaxWidth()
+            .border(
+                // only on bottom
+                width = 1.dp,
+                color = MaterialTheme.colorScheme.secondary.copy(alpha = 0.75f)
+            )
+            .background(MaterialTheme.colorScheme.tertiary.copy(alpha = 0.05f)
+        )
     ) {
         Text(
             text = "10",
