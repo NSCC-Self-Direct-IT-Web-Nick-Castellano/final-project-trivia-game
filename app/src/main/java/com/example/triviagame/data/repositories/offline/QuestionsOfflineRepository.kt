@@ -1,5 +1,6 @@
-package com.example.finalprojectgeopardygameapp.data.repositories
+package com.example.triviagame.data.repositories.offline
 
+import com.example.finalprojectgeopardygameapp.data.repositories.QuestionsRepository
 import com.example.triviagame.data.model.Question
 import com.example.triviagame.data.model.QuestionDao
 import kotlinx.coroutines.flow.Flow

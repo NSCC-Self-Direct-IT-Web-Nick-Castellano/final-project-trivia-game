@@ -1,5 +1,6 @@
-package com.example.finalprojectgeopardygameapp.data.repositories
+package com.example.triviagame.data.repositories.offline
 
+import com.example.finalprojectgeopardygameapp.data.repositories.ScoresRepository
 import com.example.triviagame.data.model.Score
 import com.example.triviagame.data.model.ScoreDao
 import kotlinx.coroutines.flow.Flow

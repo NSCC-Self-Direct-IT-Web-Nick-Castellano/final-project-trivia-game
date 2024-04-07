@@ -11,8 +11,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.triviagame.R
 
 
 /**
@@ -54,19 +56,19 @@ fun ScoreListHeader(
 
     ) {
         Text(
-            text = "Score",
+            text = stringResource(id = R.string.txt_score),
             modifier = Modifier
                 .padding(16.dp)
                 .weight(1f)
         )
         Text(
-            text = "Date",
+            text = stringResource(id = R.string.txt_date),
             modifier = Modifier
                 .padding(16.dp)
                 .weight(1f)
         )
         Text(
-            text = "Topic",
+            text = stringResource(id = R.string.txt_topic),
             modifier = Modifier
                 .padding(16.dp)
                 .weight(1f)
@@ -90,7 +92,8 @@ fun ScoreListItem(
                 width = 1.dp,
                 color = MaterialTheme.colorScheme.secondary.copy(alpha = 0.75f)
             )
-            .background(MaterialTheme.colorScheme.tertiary.copy(alpha = 0.05f)
+            .background(
+                MaterialTheme.colorScheme.tertiary.copy(alpha = 0.05f)
             )
     ) {
         Text(

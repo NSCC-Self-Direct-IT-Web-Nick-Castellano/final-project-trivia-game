@@ -5,17 +5,23 @@
     <string name="btn_back">Back</string>
     <string name="btn_scoreboard">Scoreboard</string>
     <string name="btn_choose_topic">Choose Game Topic</string>
+    <string name="btn_start_over">Start Over</string>
+    <string name="btn_back_to_home">Back to Home</string>
+
 
     <!-- texts -->
     <string name="txt_welcome_screen">Welcome to the Trivia Game!</string>
     <string name="txt_scoreboard_results">Your score history:</string>
     <string name="txt_choose_topic">Your score history:</string>
+    <string name="txt_topic">Topic</string>
+    <string name="txt_date">Date</string>
+    <string name="txt_score">Score</string>
 
     <!--navigation destinations-->
     <string name="home_destination">Home</string>
     <string name="choose_topic_destination">Choose Trivia Topic</string>
     <string name="game_turn_destination">Game Question</string>
-    <string name="game_result_destination">Game Result</string>
+    <string name="final_result_destination">Final Game Results</string>
     <string name="scoreboard_destination">Scoreboard</string>
 
 </resources>
