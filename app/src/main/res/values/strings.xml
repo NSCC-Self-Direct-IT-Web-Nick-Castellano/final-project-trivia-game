@@ -23,5 +23,6 @@
     <string name="game_turn_destination">Game Question</string>
     <string name="final_result_destination">Final Game Results</string>
     <string name="scoreboard_destination">Scoreboard</string>
+    <string name="txt_turn">Turn</string>
 
 </resources>
