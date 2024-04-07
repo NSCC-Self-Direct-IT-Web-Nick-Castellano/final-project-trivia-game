@@ -35,7 +35,7 @@ abstract class TriviaGameDatabase : RoomDatabase(){
                     context.applicationContext,
                     TriviaGameDatabase::class.java,
                     "trivia_game_database"
-                ).build()
+                ).fallbackToDestructiveMigration().build()
                 Instance = instance
                 instance
             }
