@@ -24,5 +24,7 @@
     <string name="final_result_destination">Final Game Results</string>
     <string name="scoreboard_destination">Scoreboard</string>
     <string name="txt_turn">Turn</string>
+    <string name="txt_correct_answers"># Correct Answers</string>
+    <string name="txt_game_over">Game Over\nYour results:</string>
 
 </resources>

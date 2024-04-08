@@ -24,8 +24,10 @@ import com.example.triviagame.TriviaGameTopAppBar
 import com.example.triviagame.data.model.Question
 import com.example.triviagame.ui.AppViewModelProvider
 import com.example.triviagame.ui.components.AppDefaultButton
+import com.example.triviagame.ui.components.FinalResultButtonWrapper
 import com.example.triviagame.ui.components.GameOverTextLabel
 import com.example.triviagame.ui.navigation.NavigationDestination
+import java.util.Date
 
 
 /**
@@ -65,7 +67,7 @@ fun GameTurnScreen(
                 title = stringResource(
                     id = GameTurnDestination.titleRes
                 ),
-                canNavigateBack = true,
+                canNavigateBack = lose != true,
                 scrollBehavior = scrollBehavior,
                 navigateUp = onNavigateBack
             )
@@ -74,7 +76,12 @@ fun GameTurnScreen(
         if (lose) {
             // use viewmodel to save the score
             viewModel.saveScore()
-            GameOverTextLabel(
+            viewModel.getTriviaTopicName()
+            FinalResultButtonWrapper(
+                score = score,
+                date = Date().toString(),
+                topic = viewModel.triviaTopicName,
+                correctAnsers = turn - 1,
                 modifier = Modifier
                     .padding(innerPadding)
                     .fillMaxSize()

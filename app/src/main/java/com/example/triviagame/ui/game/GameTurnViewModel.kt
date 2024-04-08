@@ -9,10 +9,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.finalprojectgeopardygameapp.data.repositories.QuestionsRepository
 import com.example.finalprojectgeopardygameapp.data.repositories.ScoresRepository
+import com.example.finalprojectgeopardygameapp.data.repositories.TriviaTopicsRepository
 import com.example.triviagame.data.datasources.getInitialQuestions
 import com.example.triviagame.data.model.Question
 import com.example.triviagame.data.model.Score
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
@@ -27,6 +27,7 @@ import kotlinx.coroutines.launch
 class GameTurnViewModel (
     private val questionsRepository: QuestionsRepository,
     private val scoresRepository: ScoresRepository,
+    private val triviaTopicRepository: TriviaTopicsRepository,
     private val triviaTopicId: Long,
 ): ViewModel() {
 
@@ -39,6 +40,7 @@ class GameTurnViewModel (
     var score by mutableIntStateOf(0)
     var turn by mutableIntStateOf(1)
     var lose by mutableStateOf(false)
+    var triviaTopicName by mutableStateOf("")
 
 
 
@@ -162,6 +164,20 @@ class GameTurnViewModel (
     }
 
 
+    /**
+     * Get the trivia topic name from the trivia topic id
+     */
+    fun getTriviaTopicName() {
+        viewModelScope.launch {
+            Log.d("GameTurnViewModel", "before getSingleTriviaTopic")
+            val triviaTopic =
+                triviaTopicRepository.getSingleTriviaTopic(triviaTopicId.toInt()).first()
+
+            Log.d("GameTurnViewModel", "Trivia Topic: ${triviaTopic.typeName}")
+
+            triviaTopicName = triviaTopic.typeName
+        }
+    }
 
     companion object {
         private const val TIMEOUT_MILLIS = 5_000L
