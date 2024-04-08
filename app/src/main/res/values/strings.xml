@@ -26,5 +26,6 @@
     <string name="txt_turn">Turn</string>
     <string name="txt_correct_answers"># Correct Answers</string>
     <string name="txt_game_over">Game Over\nYour results:</string>
+    <string name="txt_num_questions_answered"># Questions</string>
 
 </resources>

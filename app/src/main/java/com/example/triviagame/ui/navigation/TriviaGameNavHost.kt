@@ -56,7 +56,10 @@ fun TriviaGameNavHost(
         ) {backStackEntry ->
             val triviaTopicId = backStackEntry.arguments?.getString("triviaTopicId")
             GameTurnScreen(
-                onNavigateBack = { navController.navigateUp() }
+                onNavigateBack = { navController.navigateUp() },
+                navigateToHome = { navController.navigate(HomeDestination.route) },
+                navigateToStartOver = { triviaTopicId?.toLong()?.let { navController.navigate("${GameTurnDestination.route}/$it") } ?: navController.navigateUp() },
+                triviaTopicId = triviaTopicId?.toLong() ?: 1
             )
         }
     }

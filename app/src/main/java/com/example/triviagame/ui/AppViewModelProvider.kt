@@ -10,6 +10,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.triviagame.TriviaGameApplication
 import com.example.triviagame.ui.choosetopic.ChooseTopicViewModel
 import com.example.triviagame.ui.game.GameTurnViewModel
+import com.example.triviagame.ui.scoreboard.ScoreboardViewModel
 
 /**
  * Provides Factory to create instance of ViewModel for the entire Trivia Game app
@@ -30,6 +31,12 @@ object AppViewModelProvider {
                 scoresRepository = triviaGameApplication().container.scoresRepository,
                 triviaTopicRepository = triviaGameApplication().container.triviaTopicRepository,
                 triviaTopicId = triviaTopicId.toLong()
+            )
+        }
+        initializer {
+            ScoreboardViewModel(
+                scoresRepository = triviaGameApplication().container.scoresRepository,
+                triviaTopicsRepository = triviaGameApplication().container.triviaTopicRepository
             )
         }
     }

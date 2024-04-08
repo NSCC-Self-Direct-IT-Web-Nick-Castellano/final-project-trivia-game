@@ -8,14 +8,18 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.triviagame.R
 import com.example.triviagame.TriviaGameTopAppBar
+import com.example.triviagame.data.model.Score
+import com.example.triviagame.ui.AppViewModelProvider
 import com.example.triviagame.ui.components.ScoreList
 import com.example.triviagame.ui.navigation.NavigationDestination
 
@@ -32,9 +36,12 @@ object ScoreboardDestination : NavigationDestination {
 @Composable
 fun ScoreboardScreen(
     onNavigateBack: () -> Unit = {},
+    viewModel: ScoreboardViewModel = viewModel(factory = AppViewModelProvider.Factory),
     modifier: Modifier = Modifier
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    val scoreboardUiState = viewModel.scoreboardUiState.collectAsState()
+
     Scaffold (
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
@@ -49,6 +56,11 @@ fun ScoreboardScreen(
         },
     ) { innerPadding ->
         ScoreboardBody(
+            scores = scoreboardUiState.value.scoreboardList,
+            getTriviaTopicName = {
+                viewModel.getTriviaTopicName(it)
+                viewModel.triviaTopicName
+            },
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
@@ -63,6 +75,8 @@ fun ScoreboardScreen(
  */
 @Composable
 fun ScoreboardBody(
+    scores: List<Score> = listOf(),
+    getTriviaTopicName: (Long) -> String,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -77,7 +91,10 @@ fun ScoreboardBody(
         )
 
         // the score list
-        ScoreList()
+        ScoreList(
+            scores = scores,
+            getTriviaTopicName = getTriviaTopicName,
+        )
 
 
     }

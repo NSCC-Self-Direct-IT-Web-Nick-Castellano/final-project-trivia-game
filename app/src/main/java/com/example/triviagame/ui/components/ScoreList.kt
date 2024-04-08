@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,6 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.triviagame.R
+import com.example.triviagame.data.model.Score
 
 
 /**
@@ -22,6 +24,8 @@ import com.example.triviagame.R
  */
 @Composable
 fun ScoreList(
+    scores: List<Score> = listOf(),
+    getTriviaTopicName: (Long) -> String,
     modifier: Modifier = Modifier
 ) {
     ScoreListHeader()
@@ -29,8 +33,11 @@ fun ScoreList(
         modifier = modifier
         // add header
     ) {
-        items(10) {
-            ScoreListItem()
+        items(scores) {
+            ScoreListItem(
+                score = it,
+                getTriviaTopicName = getTriviaTopicName
+            )
         }
     }
 }
@@ -62,6 +69,12 @@ fun ScoreListHeader(
                 .weight(1f)
         )
         Text(
+            text = stringResource(id = R.string.txt_num_questions_answered),
+            modifier = Modifier
+                .padding(16.dp)
+                .weight(1f)
+        )
+        Text(
             text = stringResource(id = R.string.txt_date),
             modifier = Modifier
                 .padding(16.dp)
@@ -82,6 +95,8 @@ fun ScoreListHeader(
  */
 @Composable
 fun ScoreListItem(
+    score: Score,
+    getTriviaTopicName: (Long) -> String,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -97,19 +112,25 @@ fun ScoreListItem(
             )
     ) {
         Text(
-            text = "10",
+            text = score.finalScore.toString(),
             modifier = Modifier
                 .padding(16.dp)
                 .weight(1f)
         )
         Text(
-            text = "10/10/2021",
+            text = score.questionsAnswered.toString(),
             modifier = Modifier
                 .padding(16.dp)
                 .weight(1f)
         )
         Text(
-            text = "General Knowledge",
+            text = score.date,
+            modifier = Modifier
+                .padding(16.dp)
+                .weight(1f)
+        )
+        Text(
+            text = getTriviaTopicName(score.triviaTopicId),
             modifier = Modifier
                 .padding(16.dp)
                 .weight(1f)
@@ -124,7 +145,19 @@ fun ScoreListItem(
 @Preview(showBackground = true)
 @Composable
 fun ScoreListPreview() {
-    ScoreList()
+    ScoreList(
+        scores = listOf(
+            Score(
+                id = 1,
+                userName = "John Doe",
+                finalScore = 10,
+                questionsAnswered = 10,
+                triviaTopicId = 1,
+                date = "10/10/2021"
+            )
+        ),
+        getTriviaTopicName = { "Trivia Topic" }
+    )
 }
 
 /**
@@ -133,7 +166,17 @@ fun ScoreListPreview() {
 @Preview(showBackground = true)
 @Composable
 fun ScoreListItemPreview() {
-    ScoreListItem()
+    ScoreListItem(
+        score = Score(
+            id = 1,
+            userName = "John Doe",
+            finalScore = 10,
+            questionsAnswered = 10,
+            triviaTopicId = 1,
+            date = "10/10/2021"
+        ),
+        getTriviaTopicName = { "Trivia Topic" }
+    )
 }
 
 /**

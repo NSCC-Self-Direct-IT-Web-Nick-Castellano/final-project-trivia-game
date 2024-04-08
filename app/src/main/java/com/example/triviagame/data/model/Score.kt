@@ -32,5 +32,8 @@ data class Score(
 
 
     @ColumnInfo(name = "trivia_topic_id")
-    val triviaTopicId : Long
+    val triviaTopicId : Long,
+
+    @ColumnInfo(name = "date")
+    val date : String = "2021-10-10 10:10:10"
 )

@@ -28,7 +28,10 @@ fun FinalResultButtonWrapper(
     score: Int = 0,
     date: String = "2021-10-10 10:10:10",
     topic: String = "General Knowledge",
+    topicId: Long = 0,
     correctAnsers: Int = 0,
+    navigateToStartOver: (Long) -> Unit = {},
+    navigateToHome: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -62,12 +65,12 @@ fun FinalResultButtonWrapper(
         ) {
             // start over button
             Button(
-                onClick = { /*TODO*/ },
+                onClick = { navigateToStartOver(topicId) }
             ) {
                 Text(stringResource(id = R.string.btn_start_over))
             }
             // go back to home screen button
-            Button(onClick = { /*TODO*/ }) {
+            Button(onClick = navigateToHome) {
                 Text(stringResource(id = R.string.btn_back_to_home))
             }
         }

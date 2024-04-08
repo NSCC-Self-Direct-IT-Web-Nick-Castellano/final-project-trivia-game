@@ -49,6 +49,8 @@ object GameTurnDestination : NavigationDestination {
 fun GameTurnScreen(
     triviaTopicId: Long = 1,
     viewModel: GameTurnViewModel = viewModel(factory = AppViewModelProvider.Factory),
+    navigateToHome: () -> Unit = {},
+    navigateToStartOver: (Long) -> Unit = {},
     onNavigateBack:  () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
@@ -81,6 +83,9 @@ fun GameTurnScreen(
                 score = score,
                 date = Date().toString(),
                 topic = viewModel.triviaTopicName,
+                navigateToHome = navigateToHome,
+                navigateToStartOver = { navigateToStartOver(triviaTopicId) },
+                topicId = triviaTopicId,
                 correctAnsers = turn - 1,
                 modifier = Modifier
                     .padding(innerPadding)
@@ -95,6 +100,8 @@ fun GameTurnScreen(
                 onChooseAnswer = { selectedChoice ->
                     viewModel.nextTurn(selectedChoice)
                 },
+                navigateToHome = navigateToHome,
+                navigateToStartOver = navigateToStartOver,
                 modifier = Modifier
                     .padding(innerPadding)
                     .fillMaxSize()
@@ -114,6 +121,8 @@ fun GameTurnBody(
     loseGame: Boolean = false,
     question: Question,
     onChooseAnswer: (String) -> Unit,
+    navigateToHome: () -> Unit = {},
+    navigateToStartOver: (Long) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     Column(
