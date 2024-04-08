@@ -31,4 +31,5 @@ interface TriviaTopicDao {
     // insert initial topic
     @Insert
     suspend fun insertInitialTopics(topics : List<TriviaTopic>)
+
 }

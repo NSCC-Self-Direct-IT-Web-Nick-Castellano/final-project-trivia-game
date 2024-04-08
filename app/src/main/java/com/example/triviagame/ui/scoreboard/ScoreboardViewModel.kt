@@ -21,8 +21,22 @@ class ScoreboardViewModel(
     private val triviaTopicsRepository: TriviaTopicsRepository
 ) : ViewModel() {
 
-    // state for the trivia topic name
-    var triviaTopicName by mutableStateOf("")
+    private var triviaTopicsMap: Map<Long, String> = emptyMap()
+
+    init {
+        viewModelScope.launch {
+            // Fetch all topics and create a map of IDs to names
+            val allTopics = triviaTopicsRepository.getAllTriviaTopics().first()
+            triviaTopicsMap = allTopics.associateBy({ it.id }, { it.typeName })
+        }
+    }
+
+    /**
+     * Get the trivia topic name for a given topic ID
+     */
+    suspend fun getTriviaTopicName(topicId: Long): String? {
+        return triviaTopicsMap[topicId]
+    }
 
     // initiate the ui state
     val scoreboardUiState: StateFlow<ScoreboardUiState> = scoresRepository.getAllScores()
@@ -39,22 +53,6 @@ class ScoreboardViewModel(
             initialValue = ScoreboardUiState()
         )
 
-    /**
-     * Get the trivia topic name from the trivia topic id
-     */
-    fun getTriviaTopicName(
-        triviaTopicId: Long
-    ) {
-        viewModelScope.launch {
-            Log.d("GameTurnViewModel", "before getSingleTriviaTopic")
-            val triviaTopic =
-                triviaTopicsRepository.getSingleTriviaTopic(triviaTopicId.toInt()).first()
-
-            Log.d("GameTurnViewModel", "Trivia Topic: ${triviaTopic.typeName}")
-
-            triviaTopicName = triviaTopic.typeName
-        }
-    }
 
     companion object {
         private const val TIMEOUT_MILLIS = 5_000L

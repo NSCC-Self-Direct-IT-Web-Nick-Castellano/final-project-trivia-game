@@ -42,7 +42,8 @@ fun ScoreboardScreen(
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val scoreboardUiState = viewModel.scoreboardUiState.collectAsState()
 
-    Scaffold (
+    // Now we will get the topics from the ViewModel using a suspend function
+        Scaffold (
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             TriviaGameTopAppBar(
@@ -57,10 +58,10 @@ fun ScoreboardScreen(
     ) { innerPadding ->
         ScoreboardBody(
             scores = scoreboardUiState.value.scoreboardList,
-            getTriviaTopicName = {
-                viewModel.getTriviaTopicName(it)
-                viewModel.triviaTopicName
-            },
+//            getTriviaTopicName = {
+//                viewModel.getTriviaTopicName(it)
+//                viewModel.triviaTopicName
+//            },
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
@@ -76,7 +77,7 @@ fun ScoreboardScreen(
 @Composable
 fun ScoreboardBody(
     scores: List<Score> = listOf(),
-    getTriviaTopicName: (Long) -> String,
+//    getTriviaTopicName: (Long) -> String,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -100,7 +101,7 @@ fun ScoreboardBody(
             // the score list
             ScoreList(
                 scores = scores,
-                getTriviaTopicName = getTriviaTopicName,
+//                getTriviaTopicName = getTriviaTopicName,
             )
         }
 

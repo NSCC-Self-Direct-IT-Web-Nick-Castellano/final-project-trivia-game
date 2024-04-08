@@ -28,4 +28,6 @@ interface ScoreDao {
     @Delete
     suspend fun delete(score: Score)
 
+
+
 }

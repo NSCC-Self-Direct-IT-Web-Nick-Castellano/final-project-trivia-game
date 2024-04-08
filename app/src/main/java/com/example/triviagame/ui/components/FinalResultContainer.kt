@@ -21,7 +21,7 @@ import com.example.triviagame.R
 
 
 /**
- * Home body content
+ * Final result wrapper
  */
 @Composable
 fun FinalResultButtonWrapper(

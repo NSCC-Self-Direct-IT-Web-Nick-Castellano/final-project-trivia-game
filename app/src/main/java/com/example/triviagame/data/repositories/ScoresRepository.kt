@@ -1,6 +1,7 @@
 package com.example.finalprojectgeopardygameapp.data.repositories
 
 import com.example.triviagame.data.model.Score
+import com.example.triviagame.data.model.ScoreWithTriviaTopicName
 import kotlinx.coroutines.flow.Flow
 
 
@@ -28,5 +29,6 @@ interface ScoresRepository {
      * Delete score from the data source
      */
     suspend fun delete(score: Score)
+
 
 }

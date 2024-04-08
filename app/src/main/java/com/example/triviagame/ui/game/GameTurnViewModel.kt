@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import java.util.Date
 
 
 /**
@@ -41,6 +42,7 @@ class GameTurnViewModel (
     var turn by mutableIntStateOf(1)
     var lose by mutableStateOf(false)
     var triviaTopicName by mutableStateOf("")
+    var recordWasSaved by mutableStateOf(false)
 
 
 
@@ -156,10 +158,15 @@ class GameTurnViewModel (
                 userName = "Default User",
                 finalScore = score,
                 questionsAnswered = turn - 1,
-                triviaTopicId = triviaTopicId
+                triviaTopicId = triviaTopicId,
+                date = Date().toString()
             )
 
-            scoresRepository.insert(score)
+            if (recordWasSaved === false) {
+                recordWasSaved = true
+                scoresRepository.insert(score)
+            }
+
         }
     }
 

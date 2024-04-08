@@ -11,12 +11,21 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.finalprojectgeopardygameapp.data.repositories.TriviaTopicsRepository
 import com.example.triviagame.R
 import com.example.triviagame.data.model.Score
+import com.example.triviagame.ui.AppViewModelProvider
+import com.example.triviagame.ui.scoreboard.ScoreboardViewModel
 
 
 /**
@@ -25,7 +34,7 @@ import com.example.triviagame.data.model.Score
 @Composable
 fun ScoreList(
     scores: List<Score> = listOf(),
-    getTriviaTopicName: (Long) -> String,
+//    getTriviaTopicName: (Long) -> String,
     modifier: Modifier = Modifier
 ) {
     ScoreListHeader()
@@ -37,7 +46,7 @@ fun ScoreList(
         items(scores) {
             ScoreListItem(
                 score = it,
-                getTriviaTopicName = getTriviaTopicName
+//                getTriviaTopicName = getTriviaTopicName
             )
         }
     }
@@ -76,12 +85,6 @@ fun ScoreListHeader(
                 .weight(1f)
         )
         Text(
-            text = stringResource(id = R.string.txt_date),
-            modifier = Modifier
-                .padding(16.dp)
-                .weight(1f)
-        )
-        Text(
             text = stringResource(id = R.string.txt_topic),
             modifier = Modifier
                 .padding(16.dp)
@@ -97,9 +100,22 @@ fun ScoreListHeader(
 @Composable
 fun ScoreListItem(
     score: Score,
-    getTriviaTopicName: (Long) -> String,
+    viewModel: ScoreboardViewModel = viewModel(factory = AppViewModelProvider.Factory),
     modifier: Modifier = Modifier
 ) {
+
+    // get the trivia topic name
+    var triviaTopicName by remember {
+        mutableStateOf<String?>("")
+    }
+
+    // populate the trivia topic name
+    LaunchedEffect(Unit) {
+        viewModel.getTriviaTopicName(topicId = score.triviaTopicId)?.let {
+            triviaTopicName = it
+        }
+    }
+
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -125,13 +141,7 @@ fun ScoreListItem(
                 .weight(1f)
         )
         Text(
-            text = score.date,
-            modifier = Modifier
-                .padding(16.dp)
-                .weight(1f)
-        )
-        Text(
-            text = getTriviaTopicName(score.triviaTopicId),
+            text = triviaTopicName ?: "",
             modifier = Modifier
                 .padding(16.dp)
                 .weight(1f)
@@ -157,7 +167,7 @@ fun ScoreListPreview() {
                 date = "10/10/2021"
             )
         ),
-        getTriviaTopicName = { "Trivia Topic" }
+//        getTriviaTopicName = { "Trivia Topic" }
     )
 }
 
@@ -176,7 +186,7 @@ fun ScoreListItemPreview() {
             triviaTopicId = 1,
             date = "10/10/2021"
         ),
-        getTriviaTopicName = { "Trivia Topic" }
+//        getTriviaTopicName = { "Trivia Topic" }
     )
 }
 

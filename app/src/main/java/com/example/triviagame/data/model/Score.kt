@@ -37,3 +37,8 @@ data class Score(
     @ColumnInfo(name = "date")
     val date : String = "2021-10-10 10:10:10"
 )
+
+data class ScoreWithTriviaTopicName(
+    val score: Score,
+    val triviaTopicName: String
+)

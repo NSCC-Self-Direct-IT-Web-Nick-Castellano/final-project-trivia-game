@@ -76,15 +76,19 @@ fun GameTurnScreen(
         },
     ) { innerPadding ->
         if (lose) {
-            // use viewmodel to save the score
-            viewModel.saveScore()
-            viewModel.getTriviaTopicName()
+
+            // use viewmodel to save the score, it is a suspend function
+            if (!viewModel.recordWasSaved) {
+                viewModel.saveScore()
+                viewModel.getTriviaTopicName()
+            }
+
             FinalResultButtonWrapper(
                 score = score,
                 date = Date().toString(),
                 topic = viewModel.triviaTopicName,
                 navigateToHome = navigateToHome,
-                navigateToStartOver = { navigateToStartOver(triviaTopicId) },
+                navigateToStartOver = { topicId -> navigateToStartOver(topicId) },
                 topicId = triviaTopicId,
                 correctAnsers = turn - 1,
                 modifier = Modifier
