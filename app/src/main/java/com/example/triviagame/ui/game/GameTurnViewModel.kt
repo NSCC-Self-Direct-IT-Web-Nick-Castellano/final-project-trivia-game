@@ -1,6 +1,10 @@
 package com.example.triviagame.ui.game
 
 import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.finalprojectgeopardygameapp.data.repositories.QuestionsRepository
@@ -26,6 +30,9 @@ class GameTurnViewModel (
     private val SCORE_INCREMENT = 10
     private val TURN_INCREMENT = 1
 
+    lateinit var gameTurnUiState : StateFlow<GameTurnUiState>
+
+
     // if it is null, populate the questions into the database
     init {
         viewModelScope.launch {
@@ -35,17 +42,19 @@ class GameTurnViewModel (
             if (randomQuestion == null) {
                 questionsRepository.insertInitialQuestions(getInitialQuestions())
             }
+
+            gameTurnUiState = questionsRepository.getRandomQuestion(triviaTopicId)
+            .map {
+                // use state
+                GameTurnUiState(question = it, score = 0, turnNumber = 1, lose = false)
+            }.stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
+                initialValue = GameTurnUiState()
+            )
         }
     }
 
-    var gameTurnUiState : StateFlow<GameTurnUiState> = questionsRepository.getRandomQuestion(triviaTopicId)
-        .map {
-            GameTurnUiState(question = it)
-        }.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
-            initialValue = GameTurnUiState()
-        )
 
     /**
      * Method to advance to next turn, it receives the question choice selected by the user and updates the score and turn number
@@ -59,37 +68,63 @@ class GameTurnViewModel (
         var newScore: Int = currentScore
         var newTurnNumber: Int = currentTurnNumber
 
+        Log.d("GameTurnViewModel", "Question: ${currentQuestion.question}")
+        Log.d("GameTurnViewModel", "Selected Choice: $selectedChoice")
+        Log.d("GameTurnViewModel", "Correct Answer: ${currentQuestion.correctAnswer}")
 
 
         if (selectedChoice != currentQuestion.correctAnswer) {
-            // modify the lose variable to true, keep the rest the same
-            gameTurnUiState = gameTurnUiState.value.copy(lose = true).let {
-                gameTurnUiState
-                    .map {
-                        GameTurnUiState(
-                            question = gameTurnUiState.value.question,
-                            score = newScore,
-                            turnNumber = newTurnNumber
-                        )
-                    }.stateIn(
-                        scope = viewModelScope,
-                        started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
-                        initialValue = GameTurnUiState()
+            Log.d("GameTurnViewModel", "Wrong Answer")
+//            lose = true
+
+            // modify the lose variable to true, keep the rest the same, also keep the same
+            // random question
+            gameTurnUiState = questionsRepository.getRandomQuestion(triviaTopicId)
+                .map {
+                    GameTurnUiState(question = it, score = newScore, turnNumber = newTurnNumber, lose = true)
+                }.stateIn(
+                    scope = viewModelScope,
+                    started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
+                    initialValue = GameTurnUiState(
+                        question = currentQuestion,
+                        score = newScore,
+                        turnNumber = newTurnNumber,
+                        lose = true
                     )
-            }
+                )
+
+
         } else {
+            Log.d("GameTurnViewModel", "Correct Answer")
             newScore = newScore + SCORE_INCREMENT
             newTurnNumber = newTurnNumber + TURN_INCREMENT
+            // update the state
+//            score = newScore
+//            turn = newTurnNumber
+
+            gameTurnUiState = questionsRepository.getRandomQuestion(triviaTopicId)
+                .map {
+                    GameTurnUiState(question = it, score = newScore, turnNumber = newTurnNumber)
+                }.stateIn(
+                    scope = viewModelScope,
+                    started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
+                    initialValue = GameTurnUiState(
+                        question = currentQuestion,
+                        score = newScore,
+                        turnNumber = newTurnNumber,
+                        lose = false
+                    )
+                )
         }
 
-        gameTurnUiState = questionsRepository.getRandomQuestion(triviaTopicId)
-            .map {
-                GameTurnUiState(question = it, score = newScore, turnNumber = newTurnNumber)
-            }.stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
-                initialValue = GameTurnUiState()
-            )
+
+
+
+
+
+
+        Log.d("GameTurnViewModel", "New Score: $newScore")
+        Log.d("GameTurnViewModel", "New Turn Number: $newTurnNumber")
     }
 
 
