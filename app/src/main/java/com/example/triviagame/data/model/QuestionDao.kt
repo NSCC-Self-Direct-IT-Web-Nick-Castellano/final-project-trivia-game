@@ -19,7 +19,7 @@ interface QuestionDao {
 
     // get random question
     @Query("SELECT * FROM questions WHERE trivia_topic_id = :topicId ORDER BY RANDOM() LIMIT 1")
-    fun getRandomQuestion(topicId : Long): Flow<Question>
+    fun getRandomQuestion(topicId : Long = 1): Flow<Question>
 
 
     // insert a question

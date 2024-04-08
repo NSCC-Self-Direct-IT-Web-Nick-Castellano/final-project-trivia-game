@@ -16,7 +16,7 @@ interface QuestionsRepository {
     /**
      * Retrieve a random question from the given data source.
      */
-    fun getRandomQuestion(topicId: Long): Flow<Question>
+    fun getRandomQuestion(topicId: Long = 1): Flow<Question>
 
     /**
      * Insert initial questions

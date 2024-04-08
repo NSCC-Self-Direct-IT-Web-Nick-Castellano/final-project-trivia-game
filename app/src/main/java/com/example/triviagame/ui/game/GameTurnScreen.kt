@@ -50,7 +50,7 @@ fun GameTurnScreen(
     modifier: Modifier = Modifier
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-    var gameTurnUiState = viewModel.gameTurnUiState.collectAsState()
+    val gameTurnUiState = viewModel.gameTurnUiState.collectAsState()
 
     Scaffold (
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
