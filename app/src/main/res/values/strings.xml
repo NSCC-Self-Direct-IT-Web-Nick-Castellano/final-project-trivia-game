@@ -27,5 +27,6 @@
     <string name="txt_correct_answers"># Correct Answers</string>
     <string name="txt_game_over">Game Over\nYour results:</string>
     <string name="txt_num_questions_answered"># Questions</string>
+    <string name="txt_no_scores">There are no records to display</string>
 
 </resources>

@@ -85,16 +85,24 @@ fun ScoreboardBody(
             .padding(8.dp)
         ,
     ) {
-        Text(
-            text = stringResource(id = R.string.txt_scoreboard_results),
-            modifier = Modifier.padding(16.dp)
-        )
 
-        // the score list
-        ScoreList(
-            scores = scores,
-            getTriviaTopicName = getTriviaTopicName,
-        )
+
+        if (scores.isEmpty()) {
+            Text(
+                text = stringResource(id = R.string.txt_no_scores),
+                modifier = Modifier.padding(16.dp)
+            )
+        } else {
+            Text(
+                text = stringResource(id = R.string.txt_scoreboard_results),
+                modifier = Modifier.padding(16.dp)
+            )
+            // the score list
+            ScoreList(
+                scores = scores,
+                getTriviaTopicName = getTriviaTopicName,
+            )
+        }
 
 
     }

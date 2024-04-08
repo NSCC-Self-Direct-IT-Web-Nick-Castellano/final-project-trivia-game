@@ -29,6 +29,7 @@ fun ScoreList(
     modifier: Modifier = Modifier
 ) {
     ScoreListHeader()
+
     LazyColumn(
         modifier = modifier
         // add header
