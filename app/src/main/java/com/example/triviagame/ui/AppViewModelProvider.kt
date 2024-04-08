@@ -27,6 +27,7 @@ object AppViewModelProvider {
 
             GameTurnViewModel(
                 questionsRepository = triviaGameApplication().container.questionRepository,
+                scoresRepository = triviaGameApplication().container.scoresRepository,
                 triviaTopicId = triviaTopicId.toLong()
             )
         }

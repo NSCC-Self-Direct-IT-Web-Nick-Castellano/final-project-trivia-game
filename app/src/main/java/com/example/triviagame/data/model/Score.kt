@@ -19,7 +19,7 @@ import androidx.room.PrimaryKey
     ]
 )
 data class Score(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     val id : Long,
 
     @ColumnInfo(name = "user_name")

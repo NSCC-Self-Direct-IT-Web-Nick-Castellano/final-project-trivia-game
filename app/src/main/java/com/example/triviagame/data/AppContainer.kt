@@ -10,7 +10,7 @@ import com.example.triviagame.data.repositories.offline.TriviaTopicsOfflineRepos
 
 interface AppContainer {
     val questionRepository: QuestionsRepository
-    val scoreRepository: ScoresRepository
+    val scoresRepository: ScoresRepository
     val triviaTopicRepository: TriviaTopicsRepository
 }
 
@@ -26,7 +26,7 @@ class DefaultAppContainer(
         )
     }
 
-    override val scoreRepository: ScoresRepository by lazy {
+    override val scoresRepository: ScoresRepository by lazy {
         ScoresOfflineRepository(
             database.scoreDao()
         )

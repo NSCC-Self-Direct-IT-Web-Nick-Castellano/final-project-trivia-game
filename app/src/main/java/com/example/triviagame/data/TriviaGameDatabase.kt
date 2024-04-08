@@ -17,7 +17,7 @@ import com.example.triviagame.data.model.TriviaTopicDao
         Score::class,
         TriviaTopic::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class TriviaGameDatabase : RoomDatabase(){
@@ -40,30 +40,6 @@ abstract class TriviaGameDatabase : RoomDatabase(){
                 instance
             }
         }
-
-//        /**
-//         *  Populate the database with the initial data if it is empty
-//         *  use datasources -> QuestionInitialData -> getInitialQuestions(), TriviaTopicInitialData -> getInitialTopics()
-//         *  to get the initial data arrays and insert them into the database using room DAOs repositories methods
-//         *  insertInitialQuestions and insertInitialTopics
-//         */
-//        fun populateDatabase(context: Context) {
-//            val database = getDatabase(context)
-//            val questionDao = database.questionDao()
-//            val triviaTopicDao = database.triviaTopicDao()
-//
-//            // get all questions, remember that getAllQuestions() returns a Flow, we need to
-//            // collect it and convert it to a list
-//            if (questionDao.getAllQuestions().isEmpty()) {
-//                // insert initial questions
-//                questionDao.insertInitialQuestions(QuestionInitialData.getInitialQuestions())
-//            }
-//
-//            if (triviaTopicDao.getAllTopics().isEmpty()) {
-//                // insert initial topics
-//                triviaTopicDao.insertInitialTopics(TriviaTopicInitialData.getInitialTopics())
-//            }
-//        }
 
     }
 }

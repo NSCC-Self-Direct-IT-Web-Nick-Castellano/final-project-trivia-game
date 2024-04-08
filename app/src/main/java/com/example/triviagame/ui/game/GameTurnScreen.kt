@@ -24,6 +24,7 @@ import com.example.triviagame.TriviaGameTopAppBar
 import com.example.triviagame.data.model.Question
 import com.example.triviagame.ui.AppViewModelProvider
 import com.example.triviagame.ui.components.AppDefaultButton
+import com.example.triviagame.ui.components.GameOverTextLabel
 import com.example.triviagame.ui.navigation.NavigationDestination
 
 
@@ -52,6 +53,11 @@ fun GameTurnScreen(
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val gameTurnUiState = viewModel.gameTurnUiState.collectAsState()
 
+    // the mutable state variables for the score, turn number and lose
+    val score = viewModel.score
+    val turn = viewModel.turn
+    val lose = viewModel.lose
+
     Scaffold (
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
@@ -65,18 +71,28 @@ fun GameTurnScreen(
             )
         },
     ) { innerPadding ->
-        GameTurnBody(
-            score = gameTurnUiState.value.score,
-            turn = gameTurnUiState.value.turnNumber,
-            loseGame = gameTurnUiState.value.lose,
-            question = gameTurnUiState.value.question,
-            onChooseAnswer = { selectedChoice ->
-                viewModel.nextTurn(selectedChoice)
-            },
-            modifier = Modifier
-                .padding(innerPadding)
-                .fillMaxSize()
-        )
+        if (lose) {
+            // use viewmodel to save the score
+            viewModel.saveScore()
+            GameOverTextLabel(
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .fillMaxSize()
+            )
+        } else {
+            GameTurnBody(
+                score = score,
+                turn = turn,
+                loseGame = lose,
+                question = gameTurnUiState.value.question,
+                onChooseAnswer = { selectedChoice ->
+                    viewModel.nextTurn(selectedChoice)
+                },
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .fillMaxSize()
+            )
+        }
     }
 }
 
