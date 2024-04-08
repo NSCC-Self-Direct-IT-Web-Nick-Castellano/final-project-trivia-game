@@ -70,6 +70,9 @@ fun GameTurnScreen(
             turn = gameTurnUiState.value.turnNumber,
             loseGame = gameTurnUiState.value.lose,
             question = gameTurnUiState.value.question,
+            onChooseAnswer = { selectedChoice ->
+                viewModel.nextTurn(selectedChoice)
+            },
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
@@ -87,6 +90,7 @@ fun GameTurnBody(
     turn: Int = 1,
     loseGame: Boolean = false,
     question: Question,
+    onChooseAnswer: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -130,13 +134,13 @@ fun GameTurnBody(
         ) {
 
                 // first button
-                AppDefaultButton(buttonText = question.choiceA, onButtonClicked = {})
+                AppDefaultButton(buttonText = question.choiceA, onButtonClicked = { onChooseAnswer("A") })
                 // second button
-                AppDefaultButton(buttonText = question.choiceB, onButtonClicked = {})
+                AppDefaultButton(buttonText = question.choiceB, onButtonClicked = { onChooseAnswer("B") })
                 // third button
-                AppDefaultButton(buttonText = question.choiceC, onButtonClicked = {})
+                AppDefaultButton(buttonText = question.choiceC, onButtonClicked = { onChooseAnswer("C") })
                 // fourth button
-                AppDefaultButton(buttonText = question.choiceD, onButtonClicked = {})
+                AppDefaultButton(buttonText = question.choiceD, onButtonClicked = { onChooseAnswer("D") })
         }
     }
 }

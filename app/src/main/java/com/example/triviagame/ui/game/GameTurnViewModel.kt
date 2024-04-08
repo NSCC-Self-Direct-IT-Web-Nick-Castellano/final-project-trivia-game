@@ -66,7 +66,11 @@ class GameTurnViewModel (
             gameTurnUiState = gameTurnUiState.value.copy(lose = true).let {
                 gameTurnUiState
                     .map {
-                        GameTurnUiState(question = gameTurnUiState.value.question, score = newScore, turnNumber = newTurnNumber)
+                        GameTurnUiState(
+                            question = gameTurnUiState.value.question,
+                            score = newScore,
+                            turnNumber = newTurnNumber
+                        )
                     }.stateIn(
                         scope = viewModelScope,
                         started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
