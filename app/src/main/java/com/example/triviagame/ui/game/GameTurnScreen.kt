@@ -11,14 +11,18 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.triviagame.R
 import com.example.triviagame.TriviaGameTopAppBar
+import com.example.triviagame.data.model.Question
+import com.example.triviagame.ui.AppViewModelProvider
 import com.example.triviagame.ui.components.AppDefaultButton
 import com.example.triviagame.ui.navigation.NavigationDestination
 
@@ -29,6 +33,8 @@ import com.example.triviagame.ui.navigation.NavigationDestination
 object GameTurnDestination : NavigationDestination {
     override val route = "game_turn"
     override val titleRes = R.string.game_turn_destination
+    const val topicIdArg : Long = 1
+    val routeWithArgs = "$route/{${topicIdArg}}"
 }
 
 
@@ -38,11 +44,14 @@ object GameTurnDestination : NavigationDestination {
 @ExperimentalMaterial3Api
 @Composable
 fun GameTurnScreen(
-//    navigateToChooseTopic: () -> Unit,
-//    navigateToScoreResults: () -> Unit,
+    triviaTopicId: Long = 1,
+    viewModel: GameTurnViewModel = viewModel(factory = AppViewModelProvider.Factory),
+    onNavigateBack:  () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    val gameTurnUiState = viewModel.gameTurnUiState.collectAsState()
+
     Scaffold (
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
@@ -52,12 +61,15 @@ fun GameTurnScreen(
                 ),
                 canNavigateBack = true,
                 scrollBehavior = scrollBehavior,
+                navigateUp = onNavigateBack
             )
         },
     ) { innerPadding ->
         GameTurnBody(
-//            navigateToChooseTopic = navigateToChooseTopic,
-//            navigateToScoreResults = navigateToScoreResults,
+            score = gameTurnUiState.value.score,
+            turn = gameTurnUiState.value.turnNumber,
+            loseGame = gameTurnUiState.value.lose,
+            question = gameTurnUiState.value.question,
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
@@ -71,8 +83,10 @@ fun GameTurnScreen(
  */
 @Composable
 fun GameTurnBody(
-//    navigateToChooseTopic: () -> Unit,
-//    navigateToScoreResults: () -> Unit,
+    score: Int = 1000,
+    turn: Int = 1,
+    loseGame: Boolean = false,
+    question: Question,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -91,15 +105,16 @@ fun GameTurnBody(
                 .padding(24.dp)
         ) {
             // display the current score
-            Text(text = "${stringResource(id = R.string.txt_score)}: 1000")
+            Text(text = "${stringResource(id = R.string.txt_score)}: ${score}")
 
             // display the current turn
-            Text(text = "${stringResource(id = R.string.txt_turn)}: 1")
+            Text(text = "${stringResource(id = R.string.txt_turn)}: ${turn}")
         }
 
         // display the question
         Text(
-            text = "What is the capital of France?",
+            text = question.question,
+//            text = "What is the capital of France?",
             modifier = Modifier.padding(24.dp)
         )
 
@@ -113,14 +128,15 @@ fun GameTurnBody(
                 .padding(24.dp)
 
         ) {
+
                 // first button
-                AppDefaultButton(buttonText = "Paris", onButtonClicked = {})
+                AppDefaultButton(buttonText = question.choiceA, onButtonClicked = {})
                 // second button
-                AppDefaultButton(buttonText = "London", onButtonClicked = {})
+                AppDefaultButton(buttonText = question.choiceB, onButtonClicked = {})
                 // third button
-                AppDefaultButton(buttonText = "Berlin", onButtonClicked = {})
+                AppDefaultButton(buttonText = question.choiceC, onButtonClicked = {})
                 // fourth button
-                AppDefaultButton(buttonText = "Madrid", onButtonClicked = {})
+                AppDefaultButton(buttonText = question.choiceD, onButtonClicked = {})
         }
     }
 }

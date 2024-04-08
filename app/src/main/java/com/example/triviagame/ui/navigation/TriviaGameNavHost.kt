@@ -4,8 +4,10 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.example.triviagame.ui.choosetopic.ChooseTopicDestination
 import com.example.triviagame.ui.choosetopic.ChooseTopicScreen
 import com.example.triviagame.ui.game.GameTurnDestination
@@ -38,7 +40,10 @@ fun TriviaGameNavHost(
         }
         composable(route = ChooseTopicDestination.route) {
              ChooseTopicScreen(
-                 onNavigateBack = { navController.navigateUp() }
+                onNavigateBack = { navController.navigateUp() },
+                navigateToGameScreen = {triviaTopicId ->
+                    navController.navigate("${GameTurnDestination.route}/$triviaTopicId")
+                }
              )
         }
         composable(route = ScoreboardDestination.route) {
@@ -46,8 +51,13 @@ fun TriviaGameNavHost(
                 onNavigateBack = { navController.navigateUp() }
             )
         }
-        composable(route = GameTurnDestination.route) {
-            GameTurnScreen()
+        composable(
+            route = "${GameTurnDestination.route}/{triviaTopicId}",
+        ) {backStackEntry ->
+            val triviaTopicId = backStackEntry.arguments?.getString("triviaTopicId")
+            GameTurnScreen(
+                onNavigateBack = { navController.navigateUp() }
+            )
         }
     }
 }

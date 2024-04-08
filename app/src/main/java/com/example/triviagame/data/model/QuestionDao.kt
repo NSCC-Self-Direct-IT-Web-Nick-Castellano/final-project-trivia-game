@@ -18,8 +18,8 @@ interface QuestionDao {
     fun getAllQuestions() : Flow<List<Question>>
 
     // get random question
-    @Query("SELECT * FROM questions ORDER BY RANDOM() LIMIT 1")
-    fun getRandomQuestion(): Flow<Question>
+    @Query("SELECT * FROM questions WHERE trivia_topic_id = :topicId ORDER BY RANDOM() LIMIT 1")
+    fun getRandomQuestion(topicId : Long): Flow<Question>
 
 
     // insert a question
@@ -32,5 +32,5 @@ interface QuestionDao {
 
     // insert all the questions
     @Insert
-    suspend fun insertInitialQuestions(topics : List<Question>)
+    suspend fun insertInitialQuestions(questions : List<Question>)
 }

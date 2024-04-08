@@ -9,10 +9,16 @@ import kotlinx.coroutines.flow.Flow
 class QuestionsOfflineRepository(private val questionDao: QuestionDao) : QuestionsRepository {
     override fun getAllQuestions(): Flow<List<Question>> = questionDao.getAllQuestions()
 
-    override fun getRandomQuestion(): Flow<Question> = questionDao.getRandomQuestion()
+    override fun getRandomQuestion(topicId: Long): Flow<Question> = questionDao.getRandomQuestion(
+        topicId = topicId
+    )
 
     override suspend  fun insert(question: Question) = questionDao.insert(question = question)
 
     override suspend  fun delete(question: Question) = questionDao.delete(question = question)
+
+    override suspend fun insertInitialQuestions(questions: List<Question>) {
+        questionDao.insertInitialQuestions(questions = questions)
+    }
 
 }

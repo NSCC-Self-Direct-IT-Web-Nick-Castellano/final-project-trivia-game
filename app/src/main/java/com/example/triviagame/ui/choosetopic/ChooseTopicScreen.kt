@@ -15,6 +15,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.example.triviagame.R
 import com.example.triviagame.TriviaGameTopAppBar
 import com.example.triviagame.data.model.TriviaTopic
@@ -35,12 +36,12 @@ object ChooseTopicDestination : NavigationDestination {
 @ExperimentalMaterial3Api
 @Composable
 fun ChooseTopicScreen(
-//    navigateToChooseTopic: () -> Unit,
-//    navigateToScoreResults: () -> Unit,
+    navigateToGameScreen: (Long) -> Unit,
     onNavigateBack: () -> Unit = {},
-    viewModel: ChooseTopicViewModel = viewModel(factory= AppViewModelProvider.Factory),
+//    viewModel: ChooseTopicViewModel = viewModel(factory= AppViewModelProvider.Factory()),
     modifier: Modifier = Modifier
 ) {
+    val viewModel: ChooseTopicViewModel = viewModel(factory= AppViewModelProvider.Factory)
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val triviaTopicsUiState = viewModel.triviaTopicsUiState.collectAsState()
 
@@ -58,9 +59,8 @@ fun ChooseTopicScreen(
         },
     ) { innerPadding ->
         ChooseTopicBody(
-//            navigateToChooseTopic = navigateToChooseTopic,
-//            navigateToScoreResults = navigateToScoreResults,
             topics = triviaTopicsUiState.value.triviaTopicsList,
+            navigateToGameScreen = navigateToGameScreen,
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
@@ -77,6 +77,7 @@ fun ChooseTopicScreen(
 fun ChooseTopicBody(
 //    navigateToChooseTopic: () -> Unit,
 //    navigateToScoreResults: () -> Unit,
+    navigateToGameScreen: (Long) -> Unit,
     topics: List<TriviaTopic>,
     modifier: Modifier = Modifier
 ) {
@@ -91,7 +92,9 @@ fun ChooseTopicBody(
 
         // choose topic button list
         ChooseTopicButtonList(
-            navigateToChooseTopic = { /*TODO*/ },
+            // we make a button to navigate to game turn screen, takes question id and trivia topic
+            // id long as parameter, and we take these by topics items
+            navigateToGame = navigateToGameScreen,
             topics = topics
         )
 
@@ -108,6 +111,7 @@ fun ChooseTopicBody(
 fun ChooseTopicScreenPreview() {
     ChooseTopicScreen(
         onNavigateBack = {},
+        navigateToGameScreen = { _ -> },
 //        navigateToChooseTopic = {},
 //        navigateToScoreResults = {},
     )

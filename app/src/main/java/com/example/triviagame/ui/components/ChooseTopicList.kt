@@ -13,17 +13,10 @@ import com.example.triviagame.data.model.TriviaTopic
  */
 @Composable
 fun ChooseTopicButtonList(
-    navigateToChooseTopic: () -> Unit,
+    navigateToGame: (Long) -> Unit,
     topics: List<TriviaTopic>,
     modifier: Modifier = Modifier
 ) {
-//    // make a list of TriviaTopic
-//    val triviaTopicList = listOf<TriviaTopic>(
-//        TriviaTopic(id = 1, typeName = "Movies"),
-//        TriviaTopic(id = 2, typeName = "Music"),
-//        TriviaTopic(id = 3, typeName = "Videogane"),
-//        TriviaTopic(id = 4, typeName = "Sports"),
-//    )
 
     if (topics.isEmpty()) {
         // if the list is empty, show a message
@@ -35,7 +28,11 @@ fun ChooseTopicButtonList(
         LazyColumn {
             items(items = topics) { item ->
                 AppDefaultButton(
-                    onButtonClicked = navigateToChooseTopic,
+                    // we make a button to navigate to game turn screen, takes question id and trivia topic
+                    // id long as parameter, and we take these by topics items
+                    onButtonClicked = {
+                        navigateToGame(item.id)
+                    },
                     buttonText = item.typeName,
                     maxWidth = 0.7f
                 )
@@ -51,7 +48,7 @@ fun ChooseTopicButtonList(
 @Composable
 fun ChooseTopicButtonListPreview() {
     ChooseTopicButtonList(
-        navigateToChooseTopic = {},
+        navigateToGame = {},
         topics = listOf(
             TriviaTopic(id = 1, typeName = "Movies"),
             TriviaTopic(id = 2, typeName = "Music"),
