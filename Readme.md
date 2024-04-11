@@ -22,7 +22,7 @@ Welcome to the Trivia Game Android app! This app is designed to entertain and ch
 1. Choose a topic: movies, music, video games, or sports.
 2. Answer trivia questions by selecting the correct option.
 3. Earn points for each correct answer and see how high you can score!
-4. Be cautious not to select the wrong answer, as it will result in losing points.
+4. Be cautious not to select the wrong answer, as it will result in losing the game.
 5. Navigate between questions, change topics, or return to the home screen as needed.
 6. Track your progress and compete for the highest score on the user scoreboard.
 
